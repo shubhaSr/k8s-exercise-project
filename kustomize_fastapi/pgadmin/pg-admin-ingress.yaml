@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: test-phpmyadmin-ingress
+  namespace: kustomize
+  generation: 2
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+   - hosts:
+     - phpmyadmin.shubha-datascientest.cloudns.biz
+     secretName: letsencrypt-prod
+  ingressClassName: traefik
+  rules:
+  - host: phpmyadmin.shubha-datascientest.cloudns.biz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: phpmyadmin-service
+            port:
+              number: 80
+

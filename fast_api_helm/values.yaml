@@ -1,0 +1,29 @@
+mysql:
+  enabled: true
+  image: mysql:5.6
+  password: "admin"
+  pvc:
+    name: mysql-persistent-storage
+    accessMode: ReadWriteOnce
+    storage: 128Mi
+    storageClassName: local-path
+phpmyadmin:
+  enabled: true
+  image: phpmyadmin/phpmyadmin
+  containerPort: 80
+  pmaHost: mysql
+  pmaPort: "3306"
+
+fastapi:
+  enabled: true
+  image: shubha1997/fast_api_app:6
+  deployment:
+    replicas: 1
+    strategy: Recreate
+    imagePullPolicy: IfNotPresent
+    containerPort: 5000
+  service:
+    type: NodePort
+    port: 5000
+    targetPort: 5000
+

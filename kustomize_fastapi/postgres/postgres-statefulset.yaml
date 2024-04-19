@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: test-postgres
+  namespace: kustomize
+  labels:
+    app: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres
+        env:
+        - name: POSTGRES_USER
+          value: admin
+        - name: POSTGRES_DB
+          value: storedb
+        - name: POSTGRES_HOST
+          value: "db"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: test-postgres-pass
+              key: password
+        envFrom:
+           - configMapRef:
+               name: test-db-config
+        ports:
+        - containerPort: 3306
+          name: postgres
+        volumeMounts:
+        - name: postgres-persistent-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-persistent-storage
+        emptyDir: {}
+

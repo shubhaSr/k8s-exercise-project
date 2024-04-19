@@ -1,0 +1,13 @@
+# Source: templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.mysql.pvc.name }}
+spec:
+  accessModes:
+    - {{ .Values.mysql.pvc.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.mysql.pvc.storage }}
+  storageClassName: {{ .Values.mysql.pvc.storageClassName }}
+

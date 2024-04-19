@@ -1,0 +1,39 @@
+clusterissuer:
+  acmeEmail: shhubh1997@gmail.com
+  acmeServer: https://acme-v02.api.letsencrypt.org/directory
+  privateKeySecretRefName: issuer-letsencrypt-prod
+  solverIngressClass: traefik
+  annotations:
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: my-helm
+    meta.helm.sh/release-namespace: default
+
+image:
+  repository: shubha1997/fast_api_app
+  tag: 8
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+
+hpa:
+  minReplicas: 3
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+
+db:
+  replicas: 1
+  image:
+    repository: postgres
+    tag: latest
+
+pgadmin:
+  replicas: 1
+  image:
+    repository:  phpmyadmin/phpmyadmin
+    tag: latest

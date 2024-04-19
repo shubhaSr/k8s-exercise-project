@@ -1,0 +1,37 @@
+{{- if .Values.fastapi.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-fastapi
+  labels:
+    app: fastapi
+spec:
+  replicas: {{ .Values.fastapi.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: {{ .Values.fastapi.image }}
+        ports:
+        - containerPort: {{ .Values.fastapi.deployment.containerPort }}
+        env:
+        - name: MYSQL_ROOT_HOST
+          value: {{ .Release.Name }}-mysql-service
+        - name: PMA_HOST
+          value: {{ .Values.phpmyadmin.pmaHost }}
+        - name: PMA_PORT
+          value: "{{ .Values.phpmyadmin.pmaPort }}"
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name:  {{ .Release.Name }}-mysql-pass
+              key: password
+
+{{- end }}
+

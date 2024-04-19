@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-fastapi
+  namespace: kustomize
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: init-command
+        image: debian
+        command: ["/bin/sh"]
+        args: ["-c", "echo $(FASTAPI_SERVICE)"]

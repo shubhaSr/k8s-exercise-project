@@ -1,0 +1,34 @@
+{{- if .Values.phpmyadmin.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-phpmyadmin
+  labels:
+    app: phpmyadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: phpmyadmin
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: {{ .Values.phpmyadmin.image }}
+        ports:
+        - containerPort: {{ .Values.phpmyadmin.containerPort }}
+        env:
+        - name: PMA_HOST
+          value: {{ .Values.phpmyadmin.pmaHost }}
+        - name: PMA_PORT
+          value: "{{ .Values.phpmyadmin.pmaPort }}"
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name:  {{ .Release.Name }}-mysql-pass
+              key: password
+{{- end }}
+

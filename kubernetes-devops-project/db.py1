@@ -1,0 +1,7 @@
+from sqlalchemy import create_engine, MetaData
+
+engine = create_engine("mysql+mysqlconnector://root:admin@mysql/storedb:3306?charset=utf8mb4")
+
+meta = MetaData()
+
+conn = engine.connect()

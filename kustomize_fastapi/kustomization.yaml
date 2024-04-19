@@ -1,0 +1,15 @@
+resources:
+- fastapi
+- pgadmin
+- postgres
+- cluster_issue.yaml
+patchesStrategicMerge:
+- patch.yaml
+# namePrefix: k8s-
+
+vars:
+- name: FASTAPI_SERVICE
+  objref:
+    kind: Service
+    name: test-fastapi-service
+    apiVersion: v1

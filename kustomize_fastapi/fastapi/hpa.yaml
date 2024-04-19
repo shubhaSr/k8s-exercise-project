@@ -1,0 +1,14 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+ name: test-fastapi-hpa
+ namespace: kustomize
+spec:
+ scaleTargetRef:
+   apiVersion: apps/v1
+   kind: Deployment
+   name: test-fastapi
+ minReplicas: 3
+ maxReplicas: 6
+ targetCPUUtilizationPercentage: 70
+
