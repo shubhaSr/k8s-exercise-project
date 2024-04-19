@@ -1,58 +1,33 @@
-# DevOps Exercise: Deploying a Secure Application on Kubernetes
+# Secure Application Deployment Project 
 
-## Context and Objective
+## Introduction
+My task here was to deploy three microservices to facilitate user registration and counting on the platform. This report outlines the deployment process, including the choice of Kubernetes objects, Dockerfile creation for the FastAPI microservice, setup of Rancher's default storage class, implementation of HorizontalPodAutoscaler (HPA), SSL certificate integration, and backup plan using the K3s client.
 
-You have been hired as a DevOps Engineer at a streaming services company. Your task is to deploy new microservices for user registration and counting on the platform. The microservices include:
+## Deployment Approach
+I followed the provided roadmap and deployed the microservices using three different methods: Kubernetes standard YAML files, Helm charts, and Kustomize configurations.
+ The application is available on the following repository:  [kubernetes-devops-project.git](https://github.com/DataScientest/kubernetes-devops-project)
 
-1. FastAPI service
-2. PostgreSQL database
-3. PGAdmin administration interface
 
-### Roadmap
+### 1. Kubernetes Standard Deployment
+In the YAML-STANDARD directory, I created Kubernetes YAML files for each microservice, ensuring appropriate configuration for services, deployments, and persistent volume claims (PVCs). The deployments included three replicas for scalability and a HorizontalPodAutoscaler based on CPU consumption.
 
-To successfully complete the assignment, follow these steps:
+### 2. Helm Deployment
+Using the HELM directory, I developed Helm charts for each microservice, specifying configurations such as service types, image versions, and resource requests. Helm provided a convenient way to manage complex deployments with customizable values for different environments.
 
-1. Define appropriate Kubernetes objects for optimal deployment.
-2. Write Dockerfile for FastAPI microservice.
-3. Create a subdomain and DNS registration.
-4. Use Rancher's default storage class for managing storage.
-5. Deploy 3 replicas of the application.
-6. Implement HorizontalPodAutoscaler for scalability.
-7. Prepare a backup plan for the cluster using K3s client.
-8. Secure the API with SSL certificates.
+### 3. Kustomize Deployment
+In the KUSTOMIZE directory, I utilized Kustomize to generate customized Kubernetes manifests for each microservice. Kustomize allowed me to overlay configurations for different environments and manage variations without duplicating YAML files.
 
 ## Deliverables
+To validate the exercise, I prepared the following deliverables in a zip format:
 
-In the provided zip file, include the following:
+1. **YAML-STANDARD Directory**: Contains Kubernetes YAML files for standard deployment.
+2. **HELM Directory**: Includes Helm charts for deployment using Helm.
+3. **KUSTOMIZE Directory**: Consists of Kustomize configurations for deployment using Kustomize.
+4. **Microservices Logs**: Log files for FastAPI, PostgreSQL, and PGAdmin microservices.
+5. **ETCD Database Backup**: Backup file of the ETCD database after deployment.
+6. **Documentation**: Detailed documentation explaining the deployment process and configurations.
 
-### Configuration Files
-
-- **YAML-STANDARD**: All configurations using Kubernetes YAML files.
-- **HELM**: All configurations for Helm deployment.
-- **KUSTOMIZE**: All configurations for Kustomize deployment.
-
-### Logs
-
-- Log files for FastAPI, PostgreSQL, and PGAdmin microservices.
-
-### Backup
-
-- Backup file of the ETCD database after deploying configurations.
-
-## Tips
-
-- Expose each microservice via a service.
-- Use ingress to connect to the FastAPI application.
-- Choose appropriate objects based on the application type and confidentiality.
-- Populate the database using the `/docs` route of FastAPI.
-- Access user list via `/users` and count all users via `/users/count` routes.
-
-## Running Services (Images)
-
-
-
-
-
-
+## Conclusion
+This project demonstrates the successful deployment of secure microservices using Kubernetes, Helm, and Kustomize. By leveraging these tools and following best practices, we have established a robust infrastructure for managing user registration and counting on the streaming platform.
 
 
